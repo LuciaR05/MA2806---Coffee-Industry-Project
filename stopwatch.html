@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <style>
+        .stopwatch-container {
+            position: fixed;
+            bottom: 60px;
+            left: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #stopwatchCanvas {
+            width: 300px;
+            height: 300px;
+            border-radius: 0%;
+        }
+    </style>
+</head>
+  <script src="script.js"></script>
+<body>
+    <div class="stopwatch-container">
+        <canvas id="stopwatchCanvas" width="300" height="300"></canvas>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("stopwatchCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let startTime = null;
+        let running = false;
+        let elapsedTime = 0;
+
+        const img = new Image();
+        img.src = "https://cdn.glitch.global/0411e11b-b8ee-4189-bfbf-de1e42351972/labour.jpg?v=1743355928378";
+        // Handle messages from the parent window (main HTML)
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'start') {
+                startTime = event.data.time * 1000;  // Convert seconds to milliseconds
+                running = true;
+                requestAnimationFrame(animate);
+            }
+        });
+
+        function formatTime(ms) {
+            let minutes = Math.floor(ms / 60000);
+            let seconds = Math.floor((ms % 60000) / 1000);
+            return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+        }
+
+        function draw(angle) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+            ctx.arc(150, 150, 100, 0, 2 * Math.PI);
+            ctx.strokeStyle = "#5d4037";
+            ctx.lineWidth = 5;
+            ctx.stroke();
+
+            ctx.drawImage(img, 25, 25, 250, 250);
+
+            let rad = angle * (Math.PI / 180);
+            let x = 150 + Math.cos(rad - Math.PI / 2) * 80;
+            let y = 150 + Math.sin(rad - Math.PI / 2) * 80;
+
+            ctx.beginPath();
+            ctx.moveTo(150, 150);
+            ctx.lineTo(x, y);
+            ctx.lineWidth = 4;
+            ctx.lineCap = "round";
+            ctx.strokeStyle = "#5d4037";
+            ctx.stroke();
+
+            ctx.font = "24px Arial";
+            ctx.fillStyle = "#5d4037";
+            ctx.textAlign = "center";
+            ctx.fillText(formatTime(elapsedTime), 150, 180);
+        }
+
+        function animate(t) {
+            if (!startTime) startTime = t;
+            elapsedTime = t - startTime;
+            let angle = (elapsedTime / 1000) % 60 * 6;
+            draw(angle);
+            if (running) requestAnimationFrame(animate);
+        }
+
+        img.onload = () => draw(0);
+          
+    </script>
+</body>
+</html>
