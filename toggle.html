@@ -148,6 +148,8 @@
         }
       ).addTo(map);
 
+      
+      // lucia note - make sure that this works for all the curves, some keep glitching and its not working??
       // Function to create Bezier curves
       function getBezierCurve(start, end, curvature) {
         // Calculate midpoint
@@ -177,8 +179,9 @@
           points.push([lat, lng]);
         }
 
-        return points;
-      }
+        return points; // Return curve points
+
+      } 
 
       // Define custom icons
       const customIcon = L.icon({
@@ -637,12 +640,12 @@
         "Americas-Europe": "#000000", // Black
       };
 
-      // Create layers
+  // Layer groups for organization
       const originalLayer = L.layerGroup();
       const coffeeIndustryLayer = L.layerGroup();
       const mergedLayer = L.layerGroup();
 
-      // Draw the Triangular Trade routes
+      // Draw the Triangular Trade routes onto the map
       triangularTradeRoutes.forEach((route) => {
         const routeColor = routeColors[route.category];
         const isMiddlePassage = route.category === "Africa-Americas";
@@ -890,8 +893,8 @@
   `,
         "Coffee Industry": `
     <h4>Coffee Industry Flows</h4>
-    <p><img src="https://cdn.glitch.global/4998c4c1-7e7a-4cc9-9fc4-794ec0bfe582/labour.png?v=1743418062535" width="20" />     Coffee Producers</p>
-    <p><img src="https://cdn.glitch.global/4998c4c1-7e7a-4cc9-9fc4-794ec0bfe582/consumer.png?v=1743417516006" width="20" />     Major Consumer Countries</p>
+    <p><img src="https://cdn.glitch.global/4998c4c1-7e7a-4cc9-9fc4-794ec0bfe582/labour.png?v=1743418062535" width="20" /> Largest Coffee Producers</p>
+    <p><img src="https://cdn.glitch.global/4998c4c1-7e7a-4cc9-9fc4-794ec0bfe582/consumer.png?v=1743417516006" width="20" />  Largest Coffee Consumer </p>
   `,
         Comparison: `
   <h4>Comparison View</h4>
