@@ -1,4 +1,4 @@
-/* Make the body background orange */
+/* this has all the placement for and colour specific for STOPWATCH */
 body {
     background-color: transparent;
   margin: 0; 
@@ -10,7 +10,8 @@ body {
     height: 100vh;
 }
 
-/* Position stopwatch in the bottom-left corner */
+/* timer placement- making sure it looks good*/
+/* the placement of the visual to work, not move, etc */
 .stopwatch-container {
     position: fixed;
     bottom: 10px;
