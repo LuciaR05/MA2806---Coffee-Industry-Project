@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Start Button with Video and Stopwatch</title>
     <style>
-        /* Container for the video and stopwatch side by side */
+        /* a box around the video and stopwatch */
         .content-container {
             display: flex; 
             justify-content: center; 
@@ -15,7 +15,7 @@
             overflow: hidden;
         }
 
-        /* Styles for the video */
+    /* video size*/
         video {
             width: 480px;
             height: auto;
@@ -23,7 +23,7 @@
             border-radius: 10px;
         }
 
-        /* Styles for the stopwatch iframe */
+    /* stopwatch border */
         iframe {
             width: 480px;
             height: 400px;
@@ -31,7 +31,7 @@
             border-radius: 10px;
         }
 
-        /* Style for the Start button */
+        /* Start button aesthetic (colour, size, background, shape)*/
         #startButton {
             padding: 10px 20px;
             background-color: #5d4037;
@@ -45,6 +45,7 @@
             transform: translateX(-50%);
         }
 
+              /* background of the start button*/
         #startButton:hover {
             background-color: #3e2723;
         }
@@ -70,21 +71,21 @@
         const stopwatchIframe = document.getElementById("stopwatchIframe");
 
         startButton.addEventListener("click", () => {
-            // Start the video
+            // video start with start button and plays 
             coffeeVideo.play();
 
-            // Start the stopwatch inside the iframe by sending a message
+            // stopwatch and start button to go at the same time, reaction from the button being pressed 
             const iframeDoc = stopwatchIframe.contentWindow.document;
             const iframeStartButton = iframeDoc.getElementById("startButton");
 
-            // Use the video time to sync stopwatch time
+            // video and stopwatch to start at the same time
             const videoStartTime = coffeeVideo.currentTime;
 
             if (iframeStartButton) {
                 iframeStartButton.click(); // Simulate a click on the stopwatch start button
             }
 
-            // Pass video start time to the iframe for syncing
+            // align both the video and image to start at the same time
             const iframeWindow = stopwatchIframe.contentWindow;
             iframeWindow.postMessage({ type: 'start', time: videoStartTime }, '*');
         });
